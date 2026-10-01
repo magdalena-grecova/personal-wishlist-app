@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #efefef;
+    color: #222;
+    margin: 0;
+}
+
+main {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+.wishlist {
+    display: grid;
+    gap: 20px;
+}
+
+.item {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.item a {
+    text-decoration: none;
+}
