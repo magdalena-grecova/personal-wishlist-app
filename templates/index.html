@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main>
+        <h1>My Wishlist</h1>
+        <p>Things I'd love to receive.</p>
+
+        <section class="wishlist">
+            {% for item in wishlist %}
+            <article class="item">
+                <h2>{{ item.name }}</h2>
+                <p>{{ item.category }} · {{ item.price }} Kč</p>
+                <p>{{ item.priority }} priority</p>
+                <p>{{ item.description }}</p>
+                <a href="{{ item.url }}" target="_blank">View item</a>
+            </article>
+            {% endfor %}
+
+        </section>
+    </main>
+
+</body>
+</html>
