@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Wishlist Item</title>
+</head>
+
+<body>
+
+    <main>
+        <h1>Add a Wishlist Item</h1>
+
+        <form method="POST">
+
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="category">Category</label>
+            <select id="category" name="category">
+                <option value="">-- Select category --</option>
+
+                {% for category in categories %}
+                <option value="{{ category.category }}">{{ category.category }}</option>
+                {% endfor %}
+
+                <option value="__new__">+ Add a new category</option>
+            </select>
+
+            <div id="new-category-field" hidden>
+                <label for="new_category">New category name</label>
+                <input type="text" id="new_category" name="new_category">
+            </div>
+
+            <script>
+                const categorySelect = document.getElementById("category");
+                const newCategoryField = document.getElementById("new-category-field");
+                const newCategoryInput = document.getElementById("new_category");
+
+                categorySelect.addEventListener("change", function () {
+                    const isNew = this.value === "__new__";
+                    newCategoryField.hidden = !isNew;
+                    newCategoryInput.required = isNew;
+            });
+            </script>
+
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price" step="0.01">
+
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority">
+                <option value="">-- Select priority --</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+
+            <label for="url">Link</label>
+            <input type="url" id="url" name="url">
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description"></textarea>
+
+            <button type="submit">Add item</button>
+
+        </form>
+    </main>
+
+</body>
+</html>

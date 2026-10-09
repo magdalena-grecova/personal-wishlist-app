@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Wishlist Item</title>
+</head>
+
+<body>
+
+    <main>
+        <h1>Edit Wishlist Item</h1>
+
+        <form method="POST">
+
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name"
+                   value="{{ item.name }}" required>
+
+            <label for="category">Category</label>
+                <select id="category" name="category">
+                    <option value="">-- Select category --</option>
+
+                {% for category in categories %}
+                    <option value="{{ category.category }}"
+                    {% if item.category == category.category %}selected{% endif %}>
+                    {{ category.category }}
+                    </option>
+                {% endfor %}
+
+                {% if item.category and item.category not in categories|map(attribute='category')|list %}
+                    <option value="{{ item.category }}" selected>{{ item.category }}</option>
+                {% endif %}
+
+                {% if 'Other' not in categories|map(attribute='category')|list %}
+                    <option value="Other">Other</option>
+                {% endif %}
+                </select>
+
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price"
+                   step="0.01" value="{{ item.price or '' }}">
+
+            <label for="priority">Priority</label>
+            <select id="priority" name="priority">
+                <option value="">-- Select priority --</option>
+                <option value="High" {% if item.priority == "High" %}selected{% endif %}>High</option>
+                <option value="Medium" {% if item.priority == "Medium" %}selected{% endif %}>Medium</option>
+                <option value="Low" {% if item.priority == "Low" %}selected{% endif %}>Low</option>
+            </select>
+
+            <label for="url">Link</label>
+            <input type="url" id="url" name="url"
+                   value="{{ item.url or '' }}">
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description">{{ item.description or '' }}</textarea>
+
+            <button type="submit">Save changes</button>
+
+        </form>
+
+        <a href="/">Cancel</a>
+    </main>
+
+</body>
+</html>

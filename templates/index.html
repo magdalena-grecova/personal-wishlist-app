@@ -4,24 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Wishlist</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
     <main>
-        <h1>My Wishlist</h1>
-        <p>Things I'd love to receive.</p>
+        <header class="page-header">
+            <div>
+                <h1>My Wishlist</h1>
+                <p>Things I'd like to have.</p>
+            </div>
+
+            <a class="button" href="/add">Add item</a>
+        </header>
+
+        <form class="filter" method="GET" action="/">
+            <select id="category" name="category" onchange="this.form.submit()">
+                <option value="">All categories</option>
+
+                {% for category in categories %}
+                    <option value="{{ category.category }}"
+                        {% if selected_category == category.category %}selected{% endif %}>
+                        {{ category.category }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
 
         <section class="wishlist">
+
             {% for item in wishlist %}
+
             <article class="item">
-                <h2>{{ item.name }}</h2>
-                <p>{{ item.category }} · {{ item.price }} Kč</p>
-                <p>{{ item.priority }} priority</p>
-                <p>{{ item.description }}</p>
-                <a href="{{ item.url }}" target="_blank">View item</a>
+
+                <div class="item-header">
+                    <div>
+                        <h2>{{ item.name }}</h2>
+                        <p class="category">{{ item.category }}</p>
+                    </div>
+
+                    {% if item.priority %}
+                        <span class="priority {{ item.priority|lower }}">
+                            {{ item.priority }}
+                        </span>
+                    {% endif %}
+                </div>
+
+                <p class="price">{{ item.price }} {{ item.currency }}</p>
+
+                {% if item.description %}
+                    <p class="description">{{ item.description }}</p>
+                {% endif %}
+
+                <div class="item-actions">
+                    {% if item.url %}
+                        <a href="{{ item.url }}" target="_blank">View item</a>
+                    {% endif %}
+
+                    <a href="/edit/{{ item.id }}">Edit</a>
+
+                    <form action="/delete/{{ item.id }}" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+
             </article>
+
             {% endfor %}
 
         </section>
